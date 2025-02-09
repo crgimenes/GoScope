@@ -2,6 +2,8 @@
 
 GoScope (`goscope`) and rgs are two command-line tools designed to help Go developers quickly locate and navigate to functions, variables, constants, and types in Go projects. GoScope analyzes all `.go` files starting from the current directory (recursively), while rgs provides an interactive interface (via [fzf](https://github.com/junegunn/fzf)) to jump straight into your editor at the relevant line.
 
+![GoScope and rgs in action](goscope.png)
+
 ## Table of Contents
 
 - [Features](#features)
