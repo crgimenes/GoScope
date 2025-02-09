@@ -3,22 +3,23 @@
 RCS_CMD="goscope"
 INITIAL_QUERY="${*:-}"
 
-# Use fzf with rcs as the source command and dynamic reloading.
 selected=$(FZF_DEFAULT_COMMAND=$RCS_CMD \
     fzf --ansi \
         --bind "change:reload:sleep 0.1; $RCS_CMD || true" \
         --delimiter ' ' \
         --preview 'file=$(echo {2} | cut -d":" -f1); \
-            line=$(echo {2} | cut -d":" -f2); \
-            bat --color=always "$file" --highlight-line "$line"' \
-        --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
+line=$(echo {2} | cut -d":" -f2); \
+# Calcula o range de linhas: 10 linhas acima (se possível) e 10 abaixo.
+start=$(( line > 10 ? line - 10 : 1 )); \
+end=$(( line + 10 )); \
+bat --color=always --highlight-line "$line" --line-range "$start:$end" "$file"' \
+        --preview-window 'up,60%,border-bottom' \
         --query "$INITIAL_QUERY")
 
 if [ -n "$selected" ]; then
-    # Parse the selected line: "FunctionName File:Line"
     IFS=' ' read -r function file_line <<< "$selected"
-    file="${file_line%%:*}"   # Extract file name.
-    line="${file_line#*:}"    # Extract line number.
+    file="${file_line%%:*}"
+    line="${file_line#*:}"
     $EDITOR "$file" "+$line"
     echo "$file +$line"
 fi
