@@ -107,10 +107,11 @@ func PrintNumber(num int) {
 
 **Sample GoScope output**:
 ```
-main            main.go:5
-PrintNumber     main.go:9
-main.Println    main.go:6
+main main.go:5
+PrintNumber main.go:10
+main.Println main.go:6
 main.PrintNumber main.go:7
+PrintNumber.Printf main.go:11
 ```
 
 **Using rgs**:
