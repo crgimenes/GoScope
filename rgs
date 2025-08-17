@@ -9,7 +9,6 @@ selected=$(FZF_DEFAULT_COMMAND=$RCS_CMD \
         --delimiter ' ' \
         --preview 'file=$(echo {2} | cut -d":" -f1); \
 line=$(echo {2} | cut -d":" -f2); \
-# Calcula o range de linhas: 10 linhas acima (se possível) e 10 abaixo.
 start=$(( line > 10 ? line - 10 : 1 )); \
 end=$(( line + 10 )); \
 bat --color=always --highlight-line "$line" --line-range "$start:$end" "$file"' \
